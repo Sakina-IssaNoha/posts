@@ -1,6 +1,7 @@
 package com.sakina.mystate
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ RecyclerView.Adapter<PostRvAdapter.PostsViewHolder>(){
                 RecyclerView.ViewHolder(binding.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
-                var binding = PostListItemsBinding.inflate(LayoutInflater.from(context),parent,false)
+                var binding = PostListItemsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
                 return PostsViewHolder(binding)
         }
 
@@ -25,6 +26,12 @@ RecyclerView.Adapter<PostRvAdapter.PostsViewHolder>(){
                         tvId.text= displayPost.id.toString()
                         tvBody.text=displayPost.body
                         tvTitle.text=displayPost.title
+                        val context = holder.itemView.context
+                        holder.binding.clRoot.setOnClickListener {
+                                val intent = Intent(context,CommentsActivity::class.java)
+                                intent.putExtra("POST_ID",displayPost.id)
+                                context.startActivity(intent)
+                        }
                 }
         }
 
